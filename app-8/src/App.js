@@ -7,25 +7,35 @@ class App extends Component {
     super();
 
     this.state = {
-      lukeSkywalker: ""
+      value: ""
     };
   }
 
   componentDidMount() {
-    axios.get("https://swapi.co/api/people/1").then(response => {
+    axios.get("https://api.opendota.com/api/matches/5073977969").then(response => {
       this.setState({
-        lukeSkywalker: response.data
+        value: response.data
       });
+      console.log(this.state.value)
     });
   }
 
   render() {
+    // let obj1 = Object.assign(obj1,this.state.value.picks_bans[0])
+    const { picks_bans } = this.state.value
+    console.log(typeof picks_bans);
+
     return (
       <div className="App">
-        <h1>Name: {this.state.lukeSkywalker.name}</h1>
-        <h1>Birth Year: {this.state.lukeSkywalker.birth_year}</h1>
-        <h1>Height: {this.state.lukeSkywalker.height}</h1>
-        <h1>Eye Color: {this.state.lukeSkywalker.eye_color}</h1>
+        {this.state.value ?
+          <div>
+            <h1>Match ID: {this.state.value.match_id}</h1>
+            <h1>Dire Score: {this.state.value.dire_score}</h1>
+            <h1>Blank: {this.state.value.picks_bans[0].hero_id}</h1>
+            <h1>Blank: {this.state.value.skill}</h1>
+            <img src="http://cdn.dota2.com/apps/dota2/images/heroes/kunkka_hphover.png?v=5419564" />
+          </div>
+          : null}
       </div>
     );
   }
